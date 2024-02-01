@@ -62,15 +62,26 @@ def update_product(connection, product_id, name=None, description=None, price=No
     args.append(product_id)
     execute_query(connection, query, tuple(args))
 
+def rename_category(connection, old_name, new_name):
+    query = "UPDATE category SET name = %s WHERE name = %s;"
+    args = (new_name, old_name)
+    execute_query(connection, query, args)
+
 
 # Exemple de connexion à la base de données
 connection = create_server_connection("localhost", "root", "SQL12345", "store")
 
 # Exemple d'ajout d'un produit
-add_product(connection, "Nouveau Produit", "Description du nouveau produit", 100, 10, 1)
+
+#add_product(connection, "Collaborations Nike TN", "Parce que le ensemble Lacoste TN, est l'emblème de la ville de Marseille", 900, 10, 3)
 
 # Exemple de suppression d'un produit
-delete_product(connection, 1)
+delete_product(connection, 19)
 
-# Exemple de mise à jour d'un produit
-update_product(connection, 2, price=150, quantity=20)
+#Exemple de mise à jour d'un produit
+update_product(connection, 24, price=300, quantity=10)
+
+# Exemple de renommage d'une catégorie
+#rename_category(connection, "Alimentation", "Collaborations")
+
+connection.close()
