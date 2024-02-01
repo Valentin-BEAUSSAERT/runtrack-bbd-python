@@ -7,7 +7,7 @@ class DashboardApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Tableau de bord de gestion des stocks")
-        self.database = ProductDatabase("localhost", "root", "SQL12345", "store")
+        self.database = ProductDatabase("localhost", "root", "SQL12345", "shop")
         self.create_widgets()
         self.fetch_products_callback()
 
@@ -29,9 +29,8 @@ class DashboardApp:
         self.quantity_entry.pack()
 
         ttk.Label(self.root, text="Catégorie:").pack()
-        # Ici, je suppose que vous avez une liste ou un dictionnaire pour les catégories
         # Par exemple : categories_dict = {1: "Accessoires", 2: "Vêtements", 3: "Collaborations"}
-        self.category_combobox = ttk.Combobox(self.root, values=["Accessoires", "Vêtements", "Collaborations"])
+        self.category_combobox = ttk.Combobox(self.root, values=[1, 2, 3])
         self.category_combobox.pack()
 
         self.add_button = ttk.Button(self.root, text="Ajouter le produit", command=self.add_product_callback)
@@ -62,12 +61,14 @@ class DashboardApp:
         price = self.price_entry.get()
         quantity = self.quantity_entry.get()
         category = self.category_combobox.get()
+        
 
         if not name or not description or not price or not quantity or not category:
             messagebox.showwarning("Attention", "Tous les champs doivent être remplis.")
             return
+        
         try:
-            price = float(price)
+            price = int(price)
             quantity = int(quantity)
         except ValueError:
             messagebox.showwarning("Attention", "Le prix doit être un nombre et la quantité un entier.")
